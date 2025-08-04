@@ -1,125 +1,33 @@
 Traceback (most recent call last):
-  File "C:\miniconda3\Lib\site-packages\jupyter_core\utils\__init__.py", line 154, in wrapped
+  File "C:\Users\Luis D Peñaranda\AppData\Roaming\Python\Python39\site-packages\jupyter_core\utils\__init__.py", line 154, in wrapped
     asyncio.get_running_loop()
-    ~~~~~~~~~~~~~~~~~~~~~~~~^^
 RuntimeError: no running event loop
 
 During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "C:\miniconda3\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+  File "C:\Users\Luis D Peñaranda\AppData\Roaming\Python\Python39\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
     executenb(
-    ~~~~~~~~~^
-        nb,
-        ^^^
-    ...<4 lines>...
-        **kwargs,
-        ^^^^^^^^^
-    )
-    ^
-  File "C:\miniconda3\Lib\site-packages\nbclient\client.py", line 1319, in execute
+  File "C:\Users\Luis D Peñaranda\AppData\Roaming\Python\Python39\site-packages\nbclient\client.py", line 1319, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "C:\miniconda3\Lib\site-packages\jupyter_core\utils\__init__.py", line 158, in wrapped
+  File "C:\Users\Luis D Peñaranda\AppData\Roaming\Python\Python39\site-packages\jupyter_core\utils\__init__.py", line 158, in wrapped
     return loop.run_until_complete(inner)
-           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
-  File "C:\miniconda3\Lib\asyncio\base_events.py", line 725, in run_until_complete
+  File "C:\miniconda3\envs\ml_venv\lib\asyncio\base_events.py", line 647, in run_until_complete
     return future.result()
-           ~~~~~~~~~~~~~^^
-  File "C:\miniconda3\Lib\site-packages\nbclient\client.py", line 709, in async_execute
+  File "C:\Users\Luis D Peñaranda\AppData\Roaming\Python\Python39\site-packages\nbclient\client.py", line 709, in async_execute
     await self.async_execute_cell(
-        cell, index, execution_count=self.code_cells_executed + 1
-    )
-  File "C:\miniconda3\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
-    await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "C:\miniconda3\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
-    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
-nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
-------------------
-# 📦 Cargar librerías
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-
-# 🎨 Estilo visual
-sns.set(style="darkgrid")
-
-# 📁 Cargar datos desde archivo Excel
-df = pd.read_excel(
-    r"C:\Machine_Learning\jbook_ml2025\docs\datos\stock_details_5_years_edit.xlsx",
-    engine='openpyxl'
-)
-
-# 🧹 Limpiar columnas numéricas con comas como separadores de miles
-cols_to_clean = ['Open', 'High', 'Low', 'Close', 'Volume']
-for col in cols_to_clean:
-    df[col] = df[col].astype(str).str.replace(',', '')  # Elimina comas
-    df[col] = pd.to_numeric(df[col], errors='coerce')    # Convierte a numérico
-
-# ✅ Verificar tipos de datos
-print("\nTipos de datos después de limpiar:")
-print(df[cols_to_clean].dtypes)
-
-# 🧼 Eliminar filas con valores faltantes
-df = df.dropna(subset=cols_to_clean)
-
-# 🎯 Crear variable objetivo: ¿sube el precio al día siguiente?
-df["Target"] = df.groupby("Company")["Close"].shift(-1) > df["Close"]
-df["Target"] = df["Target"].astype(int)
-df = df.dropna(subset=["Target"])
-
-# 🧠 Entrenamiento del modelo
-features = cols_to_clean
-X = df[features]
-y = df["Target"]
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, shuffle=True, random_state=42
-)
-
-model = LogisticRegression(max_iter=1000)
-model.fit(X_train, y_train)
-
-# 📊 Evaluación del modelo
-y_pred = model.predict(X_test)
-
-print("\n📈 Accuracy:", accuracy_score(y_test, y_pred))
-print("\n📋 Reporte de clasificación:")
-print(classification_report(y_test, y_pred))
-
-# 🔍 Mostrar coeficientes del modelo
-coef_df = pd.DataFrame({
-    'Variable': features,
-    'Coeficiente': model.coef_[0]
-}).sort_values(by='Coeficiente', key=abs, ascending=False)
-
-print("\n🧪 Importancia de las variables (coeficientes):")
-print(coef_df)
-
-# 🧯 Matriz de confusión
-plt.figure(figsize=(6,4))
-sns.heatmap(confusion_matrix(y_test, y_pred), annot=True, fmt='d', cmap='Blues')
-plt.xlabel("Predicción")
-plt.ylabel("Real")
-plt.title("🔍 Matriz de Confusión")
-plt.tight_layout()
-plt.show()
-
-------------------
-
-
-[31m---------------------------------------------------------------------------[39m
-[31mModuleNotFoundError[39m                       Traceback (most recent call last)
-[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 2[39m
-[32m      1[39m [38;5;66;03m# 📦 Cargar librerías[39;00m
-[32m----> [39m[32m2[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mpd[39;00m
-[32m      3[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mnp[39;00m
-[32m      4[39m [38;5;28;01mimport[39;00m[38;5;250m [39m[34;01mmatplotlib[39;00m[34;01m.[39;00m[34;01mpyplot[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[34;01mplt[39;00m
-
-[31mModuleNotFoundError[39m: No module named 'pandas'
+  File "C:\Users\Luis D Peñaranda\AppData\Roaming\Python\Python39\site-packages\nbclient\client.py", line 1005, in async_execute_cell
+    exec_reply = await self.task_poll_for_reply
+  File "C:\Users\Luis D Peñaranda\AppData\Roaming\Python\Python39\site-packages\nbclient\client.py", line 806, in _async_poll_for_reply
+    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
+  File "C:\Users\Luis D Peñaranda\AppData\Roaming\Python\Python39\site-packages\nbclient\client.py", line 856, in _async_handle_timeout
+    raise CellTimeoutError.error_from_timeout_and_cell(
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+The message was: Cell execution timed out.
+Here is a preview of the cell contents:
+-------------------
+['# 📦 Cargar librerías', 'import pandas as pd', 'import numpy as np', 'import matplotlib.pyplot as plt', 'import seaborn as sns']
+...
+['plt.xlabel("Predicción")', 'plt.ylabel("Real")', 'plt.title("🔍 Matriz de Confusión")', 'plt.tight_layout()', 'plt.show()']
+-------------------
 
