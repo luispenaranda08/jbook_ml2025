@@ -28,6 +28,6 @@ Here is a preview of the cell contents:
 -------------------
 ['# 📦 Cargar librerías', 'import pandas as pd', 'import numpy as np', 'import matplotlib.pyplot as plt', 'import seaborn as sns']
 ...
-['plt.xlabel("Predicción")', 'plt.ylabel("Real")', 'plt.title("🔍 Matriz de Confusión")', 'plt.tight_layout()', 'plt.show()']
+['plt.xlabel("Predicción")', 'plt.ylabel("Real")', 'plt.title("🔬 Matriz de Confusión")', 'plt.tight_layout()', 'plt.show()']
 -------------------
 
